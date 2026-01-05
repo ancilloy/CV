@@ -46,6 +46,7 @@
                 height: 100%;
 
                 background-color: #2c5a77;
+                color: white;
             }
 
             h1 {
@@ -83,7 +84,7 @@
                 padding-top: 10px;
             }
 
-            div.element > p {
+            p {
                 margin: 0;
             }
 
@@ -94,6 +95,36 @@
             ul {
                 margin: 0;
                 padding-left: 15px;
+            }
+
+            table.coordonnees {
+                margin: auto;
+                margin-top: 20px;
+                width: 95%;
+            }
+
+            table.coordonnees td {
+                vertical-align: middle;
+                height: 60px;
+                padding-bottom: 8px;
+            }
+
+            table.coordonnees td:first-child {
+                padding-bottom: 0px;
+            }
+
+            div.col2 > p {
+                margin: 30px 0 0 10px;
+            }
+
+            div.col2 > ul {
+                list-style-type: none;
+                color: #bbbbbb;
+                padding-left: 40px;
+            }
+
+            div.col2 > ul > li {
+                margin-top: 5px;
             }
         </style>
     </head>
@@ -171,6 +202,36 @@
                 Docker, SQL, Ocaml, Ionic
             </div>
         </div>
-        <div class="col2"></div>
+        <div class="col2">
+            <table class="coordonnees">
+                <tr>
+                    <td><img src="icons/adresse.png"></td>
+                    <td>
+                        <p>12 Allée Simone de Beauvoir</p>
+                        <p>38800 Le Pont-de-Claix</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><img src="icons/mail.png"></td>
+                    <td>
+                        <p>yael.ancillon@gmail.com</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><img src="icons/tel.png"></td>
+                    <td>
+                        <p>06 22 67 63 71</p>
+                    </td>
+                </tr>
+            </table>
+
+            <p>RQTH</p>
+
+            <p>Langues :</p>
+            <ul>
+                <li>Français (langue maternelle)</li>
+                <li>Anglais (courant)</li>
+            </ul>
+        </div>
     </body>
 </html>
