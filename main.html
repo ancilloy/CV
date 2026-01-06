@@ -5,6 +5,8 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
+        <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+
         <style>
             html {
                 background-color: lightgray;
@@ -13,7 +15,7 @@
             body {
                 border: 1px solid darkslategray;
                 background-color: white;
-                font-family: Tahoma, sans-serif;
+                font-family: "Quantico", sans-serif;
 
                 width: 21cm;
                 height: 29.7cm;
@@ -50,14 +52,12 @@
             }
 
             h1 {
-                font-family: "Quantico", sans-serif;
                 color: #2c5a77;
                 margin: 5px 0 0 15px;
                 font-size: 38px;
             }
 
             h2 {
-                font-family: "Quantico", cursive;
                 margin: -5px 0 0 15px;
                 padding: 0;
                 font-size: 20px;
@@ -73,6 +73,8 @@
                 padding: 5px;
                 margin: 20px 0 2px 10px;
             }
+
+
 
             div.element {
                 font-family: 'Courier New', Courier, monospace;
@@ -97,6 +99,73 @@
                 padding-left: 15px;
             }
 
+
+
+            table.competences {
+                margin-top: 10px;
+            }
+
+            table.competences td {
+                padding: 0;
+                vertical-align: middle;
+            }
+
+            table.competences td:first-child {
+                text-align: right;
+                padding-right: 10px;
+                padding-left: 15px;
+            }
+
+            .straightBar {
+                width: 5cm;
+                height: 10px;
+                border-radius: 2px;
+
+                margin: 0;
+            }
+
+            .circleBar {
+                width: 16px;
+                height: 16px;
+                border-radius: 8px;
+
+                margin: 0;
+                margin-left: 5px;
+            }
+
+            .bar {
+                display: inline-block;
+
+                padding: 0;
+
+                background-color: #7f7f7f;
+
+                overflow: hidden;
+                position: relative;
+            }
+
+            .subBar {
+                display: inline-block;
+
+                height: 100%;
+                border-radius: inherit;
+
+                margin: 0;
+                padding: 0;
+
+                background-color: #2c5a77;
+
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+
+            .circleBar > .subBar {
+                border-radius: 0;
+            }
+
+
+
             table.coordonnees {
                 margin: auto;
                 margin-top: 20px;
@@ -106,11 +175,11 @@
             table.coordonnees td {
                 vertical-align: middle;
                 height: 60px;
-                padding-bottom: 8px;
             }
 
             table.coordonnees td:first-child {
                 padding-bottom: 0px;
+                text-align: center;
             }
 
             div.col2 > p {
@@ -125,6 +194,19 @@
 
             div.col2 > ul > li {
                 margin-top: 5px;
+            }
+
+            .iconCircle {
+                display: inline-block;
+
+                height: 24px;
+                width: 24px;
+                border-radius: 17px;
+                padding: 5px;
+
+                background-color: white;
+                color: #2c5a77;
+                vertical-align: middle;
             }
         </style>
     </head>
@@ -197,28 +279,36 @@
 
 
             <h3>Compétences</h3>
+            <p style="text-align: right; font-size: 8px;">
+                <button onclick="switchCompTable();">
+                    <span class="material-symbols-outlined" style="font-size: 10px;">horizontal_rule</span>
+                    <span class="material-symbols-outlined" style="font-size: 10px;">swap_horiz</span>
+                    <span class="material-symbols-outlined" style="font-size: 10px;">more_horiz</span>
+                </button>
+            </p>
+            <table id="compTable" class="competences">
+            </table>
             <div class="element">
-                Java, C, Git, Salesforce, Python, JavaScript, HTML, CSS, Bash,
-                Docker, SQL, Ocaml, Ionic
+                <p><span class="titre">Autres :</span> Bash, Docker, SQL, Ocaml, Ionic</p>
             </div>
         </div>
         <div class="col2">
             <table class="coordonnees">
                 <tr>
-                    <td><img src="icons/adresse.png"></td>
+                    <td><span class="iconCircle"><span class="material-symbols-outlined">location_on</span></span></td>
                     <td>
                         <p>12 Allée Simone de Beauvoir</p>
                         <p>38800 Le Pont-de-Claix</p>
                     </td>
                 </tr>
                 <tr>
-                    <td><img src="icons/mail.png"></td>
+                    <td><span class="iconCircle"><span class="material-symbols-outlined">mail</span></span></td>
                     <td>
                         <p>yael.ancillon@gmail.com</p>
                     </td>
                 </tr>
                 <tr>
-                    <td><img src="icons/tel.png"></td>
+                    <td><span class="iconCircle"><span class="material-symbols-outlined">phone</span></span></td>
                     <td>
                         <p>06 22 67 63 71</p>
                     </td>
@@ -230,8 +320,87 @@
             <p>Langues :</p>
             <ul>
                 <li>Français (langue maternelle)</li>
-                <li>Anglais (courant)</li>
+                <li>Anglais (C1)</li>
             </ul>
         </div>
+
+        <script>
+            function straightBar(level) {
+                let bar = document.createElement("span");
+                bar.className = "bar straightBar";
+
+                let subBar = document.createElement("span");
+                subBar.className = "subBar";
+                subBar.style = `width: ${level}%;`;
+
+                bar.appendChild(subBar);
+                return bar;
+            }
+
+            function circleBar(level) {
+                let fullCircleBar = document.createElement("span");
+
+                for(let n=0; n<100; n+=20) {
+                    let subCircle = document.createElement("span");
+                    subCircle.className = "bar circleBar";
+
+                    let subBar = document.createElement("span");
+                    subBar.className = "subBar";
+
+                    if (n+20<=level) {
+                        subBar.style = "width: 100%;";
+                    } else if (level<n) {
+                        subBar.style = "width: 0;";
+                    } else {
+                        subBar.style = `width: ${(level-n)*5}%;`;
+                    }
+
+                    subCircle.appendChild(subBar);
+                    fullCircleBar.appendChild(subCircle);
+                }
+
+                return fullCircleBar;
+            }
+
+            let compList = [
+                { name: "Git", level: 85 },
+                { name: "Java", level: 80 },
+                { name: "Javascript", level: 75 },
+                { name: "HTML", level: 75 },
+                { name: "CSS", level: 75 },
+                { name: "C", level: 70 },
+                { name: "Python", level: 65 },
+                { name: "Salesforce", level: 55 }
+            ];
+
+            function reloadCompetences(mode) {
+                let compTable = document.getElementById("compTable");
+                compTable.innerHTML = "";
+
+                for (let i=0; i<compList.length; i++) {
+                    let newRow = document.createElement("tr");
+
+                    let td1 = document.createElement("td");
+                    td1.innerHTML = compList[i].name;
+                    newRow.appendChild(td1);
+
+                    let td2 = document.createElement("td");
+                    td2.appendChild( (mode=="circle") ? circleBar(compList[i].level) : straightBar(compList[i].level) );
+                    newRow.appendChild(td2);
+
+                    compTable.appendChild(newRow);
+                }
+            }
+
+            let compStatus = "straight";
+            function switchCompTable() {
+                if (compStatus!="circle") { compStatus = "circle"; }
+                else { compStatus = "straight"; }
+
+                reloadCompetences(compStatus);
+            }
+
+            reloadCompetences(compStatus);
+        </script>
     </body>
 </html>
