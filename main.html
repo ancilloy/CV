@@ -72,6 +72,16 @@
 
                 padding: 5px;
                 margin: 20px 0 2px 10px;
+
+                position: relative;
+            }
+
+            .switchButton {
+                position: absolute;
+                top: 120%;
+                right: 3px;
+
+                font-size: 10px;
             }
 
 
@@ -278,14 +288,13 @@
             </div>
 
 
-            <h3>Compétences</h3>
-            <p style="text-align: right; font-size: 8px;">
-                <button onclick="switchCompTable();">
-                    <span class="material-symbols-outlined" style="font-size: 10px;">horizontal_rule</span>
-                    <span class="material-symbols-outlined" style="font-size: 10px;">swap_horiz</span>
-                    <span class="material-symbols-outlined" style="font-size: 10px;">more_horiz</span>
+            <h3>Compétences
+                <button class="switchButton" onclick="switchCompTable();">
+                    <span class="material-symbols-outlined" style="font-size: inherit;">horizontal_rule</span>
+                    <span class="material-symbols-outlined" style="font-size: inherit;">swap_horiz</span>
+                    <span class="material-symbols-outlined" style="font-size: inherit;">more_horiz</span>
                 </button>
-            </p>
+            </h3>
             <table id="compTable" class="competences">
             </table>
             <div class="element">
