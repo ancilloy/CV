@@ -180,11 +180,13 @@
                 margin: auto;
                 margin-top: 20px;
                 width: 95%;
+
+                border-spacing: 0 20px;
             }
 
             table.coordonnees td {
                 vertical-align: middle;
-                height: 60px;
+                height: 40px;
             }
 
             table.coordonnees td:first-child {
@@ -217,6 +219,61 @@
                 background-color: white;
                 color: #2c5a77;
                 vertical-align: middle;
+
+                text-shadow: none;
+                box-shadow: 0 0 0px white;
+            }
+
+            .coordoneesRow {
+                text-shadow: 0 0 0 white;
+                cursor: pointer;
+                position: relative;
+            }
+
+            @keyframes textShadowAnim {
+                0%   { text-shadow: 0 0 1px white; }
+                100% { text-shadow: 0 0 5px white; }
+            }
+
+            .coordoneesRow:hover {
+                animation: textShadowAnim 0.5s linear;
+                text-shadow: 0 0 5px white;
+            }
+
+            @keyframes boxShadowAnim {
+                0%   { box-shadow: 0 0 1px white; }
+                100% { box-shadow: 0 0 5px white; }
+            }
+
+            .coordoneesRow:hover .iconCircle {
+                animation: boxShadowAnim 0.5s linear;
+                box-shadow: 0 0 5px white;
+            }
+
+            .copyBlock {
+                padding: 8px;
+                border-radius: 5px;
+
+                color: white;
+                background-color: #0000005f;
+                text-shadow: none;
+                font-size: 10px;
+
+                position: absolute;
+                top: 100%;
+                left: 40%;
+                z-index: 1;
+            }
+
+            .hidden {
+                position: absolute;
+                display: none;
+            }
+
+            .prevent-select {
+                -webkit-user-select: none; /* Safari */
+                -ms-user-select: none; /* IE 10 and IE 11 */
+                user-select: none; /* Standard syntax */
             }
         </style>
     </head>
@@ -302,26 +359,7 @@
             </div>
         </div>
         <div class="col2">
-            <table class="coordonnees">
-                <tr>
-                    <td><span class="iconCircle"><span class="material-symbols-outlined">location_on</span></span></td>
-                    <td>
-                        <p>12 Allée Simone de Beauvoir</p>
-                        <p>38800 Le Pont-de-Claix</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td><span class="iconCircle"><span class="material-symbols-outlined">mail</span></span></td>
-                    <td>
-                        <p>yael.ancillon@gmail.com</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td><span class="iconCircle"><span class="material-symbols-outlined">phone</span></span></td>
-                    <td>
-                        <p>06 22 67 63 71</p>
-                    </td>
-                </tr>
+            <table id="coordTable" class="coordonnees">
             </table>
 
             <p>RQTH</p>
@@ -410,6 +448,48 @@
             }
 
             reloadCompetences(compStatus);
+
+            let coordList = [
+                { icon: "location_on", value: "12 Allée Simone de Beauvoir\n38800 Le Pont-de-Claix" },
+                { icon: "mail",        value: "yael.ancillon@gmail.com" },
+                { icon: "phone",       value: "06 22 67 63 71" }
+            ];
+
+            function reloadCoords() {
+                let coordTable = document.getElementById("coordTable");
+
+                for (let i=0; i<coordList.length; i++) {
+                    let newRow = document.createElement("tr");
+                    newRow.className = "coordoneesRow prevent-select";
+
+                    let copyBlock = document.createElement("div");
+                    copyBlock.innerHTML = "Copié !";
+                    copyBlock.className = "copyBlock";
+                    copyBlock.style.zIndex = -1;
+                    newRow.appendChild(copyBlock);
+                    newRow.addEventListener("click",
+                        function (event) {
+                            navigator.clipboard.writeText(coordList[i].value);
+                            copyBlock.style.zIndex = 1;
+                            setTimeout(() => {
+                                copyBlock.style.zIndex = -1;
+                            }, 1000);
+                        },
+                        false,
+                    );
+
+                    let td1 = document.createElement("td");
+                    td1.innerHTML = `<span class="iconCircle"><span class="material-symbols-outlined">${coordList[i].icon}</span></span>`;
+                    newRow.appendChild(td1);
+
+                    let td2 = document.createElement("td");
+                    td2.innerHTML = `<p>${coordList[i].value.replace("\n", "</p><p>")}</p>`
+                    newRow.appendChild(td2);
+
+                    coordTable.appendChild(newRow);
+                }
+            }
+            reloadCoords();
         </script>
     </body>
 </html>
