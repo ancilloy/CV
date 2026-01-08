@@ -278,6 +278,7 @@
         </style>
     </head>
     <body>
+        <div id="felicitations" class="copyBlock" style="top: 20px; font-size: 15px; z-index: -1;">Bravo, quelle vitesse !</div>
         <div class="col1">
             <h1>ANCILLON Yaël</h1>
             <h2>Développeur - Ingénieur Logiciel</h2>
@@ -455,6 +456,8 @@
                 { icon: "phone",       value: "06 22 67 63 71" }
             ];
 
+            let visibleCopyBlocks = [];
+
             function reloadCoords() {
                 let coordTable = document.getElementById("coordTable");
 
@@ -467,13 +470,23 @@
                     copyBlock.className = "copyBlock";
                     copyBlock.style.zIndex = -1;
                     newRow.appendChild(copyBlock);
+                    visibleCopyBlocks.push(false);
                     newRow.addEventListener("click",
                         function (event) {
                             navigator.clipboard.writeText(coordList[i].value);
                             copyBlock.style.zIndex = 1;
+                            visibleCopyBlocks[i] = true;
                             setTimeout(() => {
                                 copyBlock.style.zIndex = -1;
-                            }, 1000);
+                                visibleCopyBlocks[i] = false;
+                            }, 1200);
+                            if (!visibleCopyBlocks.includes(false)) {
+                                let felicitations = document.getElementById("felicitations");
+                                felicitations.style.zIndex = 1;
+                                setTimeout(() => {
+                                    felicitations.style.zIndex = -1;
+                                }, 2000);
+                            }
                         },
                         false,
                     );
