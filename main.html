@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>CV Ancillon Yaël</title>
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -37,6 +39,17 @@
                 height: 100%;
 
                 color: #7f7f7f;
+            }
+
+            #linkToWeb {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                z-index: -1;
+
+                color: #7f7f7f;
+                text-decoration: underline;
+                font-size: 12px;
             }
 
             div.col2 {
@@ -265,9 +278,14 @@
                 z-index: 1;
             }
 
-            .hidden {
+            #linkToGit {
                 position: absolute;
-                display: none;
+                bottom: 5px;
+                right: 5px;
+
+                color: #7f7f7f;
+                text-decoration: underline;
+                font-size: 12px;
             }
 
             .prevent-select {
@@ -278,10 +296,11 @@
         </style>
     </head>
     <body>
-        <div id="felicitations" class="copyBlock" style="top: 20px; font-size: 15px; z-index: -1;">Bravo, quelle vitesse !</div>
+        <div id="felicitationsBox" class="copyBlock" style="top: 20px; font-size: 15px; z-index: -1;">Bravo, quelle vitesse !</div>
         <div class="col1">
             <h1>ANCILLON Yaël</h1>
             <h2>Développeur - Ingénieur Logiciel</h2>
+            <a id="linkToWeb" href="https://ancilloy.github.io/CV/main.html">Version Web</a>
 
 
             <h3>Formations</h3>
@@ -347,7 +366,7 @@
 
 
             <h3>Compétences
-                <button class="switchButton" onclick="switchCompTable();">
+                <button id="switchButton" class="switchButton" onclick="switchCompTable();">
                     <span class="material-symbols-outlined" style="font-size: inherit;">horizontal_rule</span>
                     <span class="material-symbols-outlined" style="font-size: inherit;">swap_horiz</span>
                     <span class="material-symbols-outlined" style="font-size: inherit;">more_horiz</span>
@@ -370,6 +389,8 @@
                 <li>Français (langue maternelle)</li>
                 <li>Anglais (C1)</li>
             </ul>
+
+            <a id="linkToGit" href="https://github.com/ancilloy/Projet-Rebirth">Dépot Git</a>
         </div>
 
         <script>
@@ -468,6 +489,7 @@
                     let copyBlock = document.createElement("div");
                     copyBlock.innerHTML = "Copié !";
                     copyBlock.className = "copyBlock";
+                    copyBlock.id = `copyBlock-${i}`;
                     copyBlock.style.zIndex = -1;
                     newRow.appendChild(copyBlock);
                     visibleCopyBlocks.push(false);
@@ -481,10 +503,10 @@
                                 visibleCopyBlocks[i] = false;
                             }, 1200);
                             if (!visibleCopyBlocks.includes(false)) {
-                                let felicitations = document.getElementById("felicitations");
-                                felicitations.style.zIndex = 1;
+                                let felicitationsBox = document.getElementById("felicitationsBox");
+                                felicitationsBox.style.zIndex = 1;
                                 setTimeout(() => {
-                                    felicitations.style.zIndex = -1;
+                                    felicitationsBox.style.zIndex = -1;
                                 }, 2000);
                             }
                         },
@@ -503,6 +525,24 @@
                 }
             }
             reloadCoords();
+
+            function prepareForPdf() {
+                let body = document.body;
+                body.style.margin = 0;
+                body.style.border = 0;
+                document.getElementById("linkToWeb").style.zIndex = 1;
+                document.getElementById("linkToGit").remove();
+
+                document.getElementById("switchButton").remove();
+                for (let i=0; i<coordList.length; i++) {
+                    document.getElementById(`copyBlock-${i}`).remove();
+                }
+                document.getElementById("felicitationsBox").remove();
+            }
+
+            let urlParams = new URLSearchParams(window.location.search);
+            let pdf = urlParams.get("pdf");
+            if (pdf!=null) { prepareForPdf(); }
         </script>
     </body>
 </html>
