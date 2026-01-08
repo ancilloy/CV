@@ -527,6 +527,7 @@
             reloadCoords();
 
             function prepareForPdf() {
+                document.documentElement.style.width = "21cm";
                 let body = document.body;
                 body.style.margin = 0;
                 body.style.border = 0;
