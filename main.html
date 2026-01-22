@@ -10,6 +10,12 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
 
         <style>
+            :root {
+                --main-color: #2c5a77;
+                --main-gray: #555;
+                --lighter-gray: #bbb;
+            }
+
             html {
                 background-color: lightgray;
             }
@@ -38,7 +44,7 @@
                 width: 12cm;
                 height: 100%;
 
-                color: #7f7f7f;
+                color: var(--main-gray);
             }
 
             #linkToWeb {
@@ -47,7 +53,7 @@
                 right: 5px;
                 z-index: -1;
 
-                color: #7f7f7f;
+                color: var(--main-gray);
                 text-decoration: underline;
                 font-size: 12px;
             }
@@ -60,12 +66,12 @@
                 width: 9cm;
                 height: 100%;
 
-                background-color: #2c5a77;
+                background-color: var(--main-color);
                 color: white;
             }
 
             h1 {
-                color: #2c5a77;
+                color: var(--main-color);
                 margin: 5px 0 0 15px;
                 font-size: 38px;
             }
@@ -79,8 +85,8 @@
 
             h3 {
                 font-size: 20px;
-                color: #2c5a77;
-                border-bottom: 1px solid #2c5a77;
+                color: var(--main-color);
+                border-bottom: 1px solid var(--main-color);
                 font-weight: bolder;
 
                 padding: 5px;
@@ -161,7 +167,7 @@
 
                 padding: 0;
 
-                background-color: #7f7f7f;
+                background-color: var(--lighter-gray);
 
                 overflow: hidden;
                 position: relative;
@@ -176,7 +182,7 @@
                 margin: 0;
                 padding: 0;
 
-                background-color: #2c5a77;
+                background-color: var(--main-color);
 
                 position: absolute;
                 top: 0;
@@ -213,7 +219,7 @@
 
             div.col2 > ul {
                 list-style-type: none;
-                color: #bbbbbb;
+                color: var(--lighter-gray);
                 padding-left: 40px;
             }
 
@@ -230,7 +236,7 @@
                 padding: 5px;
 
                 background-color: white;
-                color: #2c5a77;
+                color: var(--main-color);
                 vertical-align: middle;
 
                 text-shadow: none;
@@ -283,7 +289,7 @@
                 bottom: 5px;
                 right: 5px;
 
-                color: #7f7f7f;
+                color: var(--main-gray);
                 text-decoration: underline;
                 font-size: 12px;
             }
