@@ -171,6 +171,8 @@
 
                 overflow: hidden;
                 position: relative;
+
+                color: transparent;
             }
 
             .subBar {
@@ -381,7 +383,7 @@
             <table id="compTable" class="competences">
             </table>
             <div class="element">
-                <p><span class="titre">Autres :</span> Bash, Docker, SQL, Ocaml, Ionic</p>
+                <p><span class="titre">Autres :</span> Méthodologie Agile (Kanban, Scrum...), DevOps, Bash, Docker, SQL, Ocaml, Ionic</p>
             </div>
         </div>
         <div class="col2">
@@ -403,6 +405,7 @@
             function straightBar(level) {
                 let bar = document.createElement("span");
                 bar.className = "bar straightBar";
+                bar.innerHTML = `${level}%`;
 
                 let subBar = document.createElement("span");
                 subBar.className = "subBar";
@@ -417,6 +420,7 @@
 
                 for(let n=0; n<100; n+=20) {
                     let subCircle = document.createElement("span");
+                    if (n==0) { subCircle.innerHTML = `${level}%`; }
                     subCircle.className = "bar circleBar";
 
                     let subBar = document.createElement("span");
