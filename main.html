@@ -307,7 +307,7 @@
         <div id="felicitationsBox" class="copyBlock" style="top: 20px; font-size: 15px; z-index: -1;">Bravo, quelle vitesse !</div>
         <div class="col1">
             <h1>ANCILLON Yaël</h1>
-            <h2>Développeur - Ingénieur Logiciel</h2>
+            <h2 id="resumeTitle">Développeur - Ingénieur Logiciel</h2>
             <a id="linkToWeb" href="https://ancilloy.github.io/CV/main.html">Version Web</a>
 
 
@@ -383,7 +383,7 @@
             <table id="compTable" class="competences">
             </table>
             <div class="element">
-                <p><span class="titre">Autres :</span> Méthodologie Agile (Kanban, Scrum...), DevOps, Bash, Docker, SQL, Ocaml, Ionic</p>
+                <p id="compPara"><span class="titre">Autres :</span> Méthodologie Agile (Kanban, Scrum...), DevOps, Bash, Docker, SQL, Ocaml, Ionic</p>
             </div>
         </div>
         <div class="col2">
@@ -550,9 +550,20 @@
                 document.getElementById("felicitationsBox").remove();
             }
 
+            function switchToMediation() {
+                document.getElementById("resumeTitle").innerHTML = "Médiation numérique";
+                document.getElementById("linkToWeb").style.zIndex = -1;
+                document.getElementById("compTable").remove();
+                let mediationComps = "Patience, pédagogie, aisance relationnelle, connaissances en informatique et en bureautique";
+                document.getElementById("compPara").innerHTML = mediationComps;
+            }
+
             let urlParams = new URLSearchParams(window.location.search);
             let pdf = urlParams.get("pdf");
             if (pdf!=null) { prepareForPdf(); }
+
+            let mediation = urlParams.get("mediation");
+            if (mediation!=null) { switchToMediation(); }
         </script>
     </body>
 </html>
