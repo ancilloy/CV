@@ -746,7 +746,7 @@
             if (mode==null || allModes[mode]==null) { mode = "developpeur"; }
 
             document.getElementById("titreCV").innerHTML = allModes[mode].titre;
-            document.getElementById("linkToWeb").href = `https://github.com/ancilloy/CV?mode=${mode}`;
+            document.getElementById("linkToWeb").href = `https://ancilloy.github.io/CV/main.html?mode=${mode}`;
             loadFormations(allModes[mode].formationsList);
             loadExperiences(allModes[mode].experiencesList);
             loadProjets(allModes[mode].projetsList);
