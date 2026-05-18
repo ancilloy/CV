@@ -307,83 +307,32 @@
         <div id="felicitationsBox" class="copyBlock" style="top: 20px; font-size: 15px; z-index: -1;">Bravo, quelle vitesse !</div>
         <div class="col1">
             <h1>ANCILLON Yaël</h1>
-            <h2 id="resumeTitle">Développeur - Ingénieur Logiciel</h2>
+            <h2 id="titreCV"></h2>
             <a id="linkToWeb" href="https://ancilloy.github.io/CV/main.html">Version Web</a>
 
 
-            <h3>Formations</h3>
-            <div class="element">
-                <p><span class="titre">Master Génie Informatique,</span> 09/2022 – 08/2024</p>
-                <p>Université Grenoble Alpes – Saint-Martin-d’Hères, 38</p>
-            </div>
-            <div class="element">
-                <p><span class="titre">Licence Informatique,</span> 09/2019 – 06/2022, mention Bien</p>
-                <p>Université Grenoble Alpes – Saint-Martin-d’Hères, 38</p>
-            </div>
-            <div class="element">
-                <p><span class="titre">Baccalauréat Général,</span> Scientifique, 2019, mention Assez Bien</p>
-                <p>Lycée de la Matheysine – La Mure, 38</p>
-            </div>
+            <h3 id="formationsTitre">Formations</h3>
+            <div id="formationsBloc"></div>
 
 
-            <h3>Expériences</h3>
-            <div class="element">
-                <p><span class="titre">Service Civique,</span> 09/2025 - 04/2026</p>
-                <p>France Travail – Grenoble, 38</p>
-                <p>
-                    Accompagner les usagers dans l’utilisation des outils numériques de Pôle emploi afin
-                    d'être facilitateur d’inclusion numérique et participer à des activités favorisant
-                    le lien social.
-                </p>
-            </div>
-
-            <div class="element">
-                <p><span class="titre">Stages Salesforce,</span> 05/2023 - 08/2023  et  04/2024 - 09/2024</p>
-                <p>Cognizant – Grenoble, 38</p>
-                <p>
-                    <ul>
-                        <li>Formation à l’utilisation et à la configuration de la plateforme Salesforce</li>
-                        <li>Introduction à certains outils DevOps (Workbench, Gearset)</li>
-                        <li>
-                            Projet fictif : développement et configuration
-                            d’une organisation Salesforce, et des divers outils
-                            qui la composent afin de correspondre aux
-                            spécifications du client.
-                        </li>
-                    </ul>
-                </p>
-            </div>
+            <h3 id="experiencesTitre">Expériences</h3>
+            <div id="experiencesBloc"></div>
 
 
-            <h3>Projets</h3>
-            <div class="element">
-                <p>
-                    <span class="titre">Projet personnel :</span> création d’un
-                    site web avec un ami, afin de se familiariser avec le
-                    développement web et ses langages (HTML, JavaScript, CSS).
-                </p>
-            </div>
-            <div class="element">
-                <p>
-                    <span class="titre">Fin de Licence (05/2022) :</span>
-                    programmation d’un jeu de société (Blokus), en Java,
-                    en groupe de 6, pendant 5 semaines. Focus sur la
-                    création du joueur virtuel et son optimisation.
-                </p>
-            </div>
+            <h3 id="projetsTitre">Projets</h3>
+            <div id="projetsBloc"></div>
 
-
-            <h3>Compétences
-                <button id="switchButton" class="switchButton" onclick="switchCompTable();">
+            <h3 id="competencesTitre">Compétences
+                <button id="switchButton" class="switchButton" onclick="switchcompetencesTableau();">
                     <span class="material-symbols-outlined" style="font-size: inherit;">horizontal_rule</span>
                     <span class="material-symbols-outlined" style="font-size: inherit;">swap_horiz</span>
                     <span class="material-symbols-outlined" style="font-size: inherit;">more_horiz</span>
                 </button>
             </h3>
-            <table id="compTable" class="competences">
+            <table id="competencesTableau" class="competences">
             </table>
             <div class="element">
-                <p id="compPara"><span class="titre">Autres :</span> Méthodologie Agile (Kanban, Scrum...), DevOps, C++, Bash, Docker, SQL, Ocaml, Ionic</p>
+                <p id="competencesEnum"></p>
             </div>
         </div>
         <div class="col2">
@@ -402,6 +351,117 @@
         </div>
 
         <script>
+            ////////////////////////////
+            //////// Formations ////////
+            ////////////////////////////
+
+            function loadFormations(formationsList) {
+                let formationsBloc = document.getElementById("formationsBloc");
+
+                if (formationsList==null || formationsList.length==0) {
+                    document.getElementById("formationsTitre").remove();
+                    formationsBloc.remove();
+                } else {
+                    for (let i=0; i<formationsList.length; i++) {
+                        let frm = document.createElement("div");
+                        frm.className = "element";
+
+                        let p1 = document.createElement("p");
+                        p1.innerHTML = `<span class="titre">${formationsList[i].titre},</span> ${formationsList[i].dates}, ${formationsList[i].annexe}`;
+                        frm.appendChild(p1);
+
+                        let p2 = document.createElement("p");
+                        p2.innerHTML = formationsList[i].ecole;
+                        frm.appendChild(p2);
+
+                        formationsBloc.appendChild(frm);
+                    }
+                }
+
+            }
+
+
+
+            /////////////////////////////
+            //////// Experiences ////////
+            /////////////////////////////
+
+            function loadExperiences(experiencesList) {
+                let experiencesBloc = document.getElementById("experiencesBloc");
+
+                if (experiencesList==null || experiencesList.length==0) {
+                    document.getElementById("experiencesTitre").remove();
+                    experiencesBloc.remove();
+                } else {
+
+                    for (let i=0; i<experiencesList.length; i++) {
+                        let exp = document.createElement("div");
+                        exp.className = "element";
+
+                        let p1 = document.createElement("p");
+                        p1.innerHTML = `<span class="titre">${experiencesList[i].titre},</span> ${experiencesList[i].dates}`;
+                        exp.appendChild(p1);
+
+                        let p2 = document.createElement("p");
+                        p2.innerHTML = `${experiencesList[i].entreprise} – ${experiencesList[i].lieu}`;
+                        exp.appendChild(p2);
+
+                        if (experiencesList[i].description!= null) {
+                            let p3 = document.createElement("p");
+                            p3.innerHTML = experiencesList[i].description;
+                            exp.appendChild(p3);
+                        }
+
+                        if (experiencesList[i].descList!= null) {
+                            let p4 = document.createElement("p");
+
+                            let ul4 = document.createElement("ul");
+                            for (let j=0; j<experiencesList[i].descList.length; j++) {
+                                let li4 = document.createElement("li");
+                                li4.innerHTML = experiencesList[i].descList[j];
+                                ul4.appendChild(li4);
+                            }
+
+                            p4.appendChild(ul4);
+                            exp.appendChild(p4);
+                        }
+
+                        experiencesBloc.appendChild(exp);
+                    }
+
+                }
+
+            }
+
+
+
+            /////////////////////////
+            //////// Projets ////////
+            /////////////////////////
+
+            function loadProjets(projetsList) {
+                let projetsBloc = document.getElementById("projetsBloc");
+
+                if (projetsList==null || projetsList.length==0) {
+                    document.getElementById("projetsTitre").remove();
+                    projetsBloc.remove();
+                } else {
+                    for (let i=0; i<projetsList.length; i++) {
+                        let prj = document.createElement("div");
+                        prj.className = "element";
+                        prj.innerHTML = `<p><span class="titre">${projetsList[i].titre} (${projetsList[i].dates}) :</span> ${projetsList[i].desc}</p>`;
+                        projetsBloc.appendChild(prj);
+                    }
+                }
+
+            }
+
+
+
+            /////////////////////////////
+            //////// Competences ////////
+            /////////////////////////////
+
             function straightBar(level) {
                 let bar = document.createElement("span");
                 bar.className = "bar straightBar";
@@ -441,45 +501,54 @@
                 return fullCircleBar;
             }
 
-            let compList = [
-                { name: "Git", level: 85 },
-                { name: "Java", level: 80 },
-                { name: "Javascript", level: 75 },
-                { name: "HTML", level: 75 },
-                { name: "CSS", level: 75 },
-                { name: "C", level: 70 },
-                { name: "Python", level: 65 },
-                { name: "Salesforce", level: 55 }
-            ];
-
-            function reloadCompetences(mode) {
-                let compTable = document.getElementById("compTable");
-                compTable.innerHTML = "";
-
-                for (let i=0; i<compList.length; i++) {
-                    let newRow = document.createElement("tr");
-
-                    let td1 = document.createElement("td");
-                    td1.innerHTML = compList[i].name;
-                    newRow.appendChild(td1);
-
-                    let td2 = document.createElement("td");
-                    td2.appendChild( (mode=="circle") ? circleBar(compList[i].level) : straightBar(compList[i].level) );
-                    newRow.appendChild(td2);
-
-                    compTable.appendChild(newRow);
+            function loadCompetences(competences, mode) {
+                let competencesTableauListe, competencesEnumListe;
+                if (competences==null) {
+                    competencesTableauListe = null;
+                    competencesEnumListe    = null;
+                } else {
+                    competencesTableauListe = competences.competencesTableauListe;
+                    competencesEnumListe    = competences.competencesEnumListe;
                 }
+
+                let competencesTableau = document.getElementById("competencesTableau");
+                if (competencesTableauListe==null) {
+                    competencesTableau.remove();
+                    document.getElementById("switchButton").remove();
+                } else {
+                    competencesTableau.innerHTML = "";
+
+                    for (let i=0; i<competencesTableauListe.length; i++) {
+                        let newRow = document.createElement("tr");
+
+                        let td1 = document.createElement("td");
+                        td1.innerHTML = competencesTableauListe[i].name;
+                        newRow.appendChild(td1);
+
+                        let td2 = document.createElement("td");
+                        td2.appendChild( (mode=="circle") ? circleBar(competencesTableauListe[i].level) : straightBar(competencesTableauListe[i].level) );
+                        newRow.appendChild(td2);
+
+                        competencesTableau.appendChild(newRow);
+                    }
+                }
+
+                let competencesEnum = document.getElementById("competencesEnum");
+                if (competencesEnumListe==null) {
+                    competencesEnum.remove();
+                } else {
+                    let prefix = (competencesTableauListe!=null) ? '<span class="titre">Autres :</span> ' : "";
+                    competencesEnum.innerHTML = prefix + competencesEnumListe;
+                }
+
+                /* <span class="titre">Autres :</span>  */
             }
 
-            let compStatus = "straight";
-            function switchCompTable() {
-                if (compStatus!="circle") { compStatus = "circle"; }
-                else { compStatus = "straight"; }
 
-                reloadCompetences(compStatus);
-            }
 
-            reloadCompetences(compStatus);
+            /////////////////////////////
+            //////// Coordonnees ////////
+            /////////////////////////////
 
             let coordList = [
                 { icon: "location_on", value: "12 Allée Simone de Beauvoir\n38800 Le Pont-de-Claix" },
@@ -536,6 +605,9 @@
             }
             reloadCoords();
 
+
+
+
             function prepareForPdf() {
                 let body = document.body;
                 body.style.margin = 0;
@@ -550,20 +622,148 @@
                 document.getElementById("felicitationsBox").remove();
             }
 
-            function switchToMediation() {
-                document.getElementById("resumeTitle").innerHTML = "Médiation numérique";
-                document.getElementById("linkToWeb").style.zIndex = -1;
-                document.getElementById("compTable").remove();
-                let mediationComps = "Patience, pédagogie, aisance relationnelle, connaissances en informatique et en bureautique";
-                document.getElementById("compPara").innerHTML = mediationComps;
+
+
+            /////////////////////////////
+            //////// Modes de CV ////////
+            /////////////////////////////
+
+            //Formations
+            let f_master = {
+                titre: "Master Génie Informatique",
+                dates: "2022 – 2024",
+                annexe: "mention Assez Bien",
+                ecole: "Université Grenoble Alpes – Saint-Martin-d’Hères, 38"
+            };
+            let f_licence = {
+                titre: "Licence Informatique",
+                dates: "2019 – 2022",
+                annexe: "mention Bien",
+                ecole: "Université Grenoble Alpes – Saint-Martin-d’Hères, 38"
+            };
+            let f_bac = {
+                titre: "Baccalauréat Général",
+                dates: "2019",
+                annexe: "Scientifique, mention Assez Bien",
+                ecole: "Lycée de la Matheysine – La Mure, 38"
+            };
+
+            //Experiences
+            let e_serviceCivique = {
+                titre: "Service Civique",
+                dates: "09/2025 - 04/2026",
+                entreprise: "France Travail",
+                lieu: "Grenoble, 38",
+                description: "Accompagner les usagers dans l’utilisation des outils numériques de Pôle emploi afin d'être facilitateur d’inclusion numérique et participer à des activités favorisant le lien social."
+            };
+            let e_stagesCognizant = {
+                titre: "Stages Salesforce",
+                dates: "05/2023 - 08/2023  et  04/2024 - 09/2024",
+                entreprise: "Cognizant",
+                lieu: "Grenoble, 38",
+                descList: [
+                    "Formation à l’utilisation et à la configuration de la plateforme Salesforce",
+                    "Introduction à certains outils DevOps (Workbench, Gearset)",
+                    "Projet fictif : développement et configuration d’une organisation Salesforce, et des divers outils qui la composent afin de correspondre aux spécifications du client."
+                ]
+            };
+
+            //Projets
+            let p_rebirth = {
+                titre: "Projet personnel",
+                dates: "09/2024 - 04/2025",
+                desc: "création d’un site web avec un ami, afin de se familiariser avec le développement web et ses langages (HTML, JavaScript, CSS)."
+            };
+            let p_blokus = {
+                titre: "Fin de Licence",
+                dates: "05/2022",
+                desc: "programmation d’un jeu de société (Blokus), en Java, en groupe de 6, pendant 5 semaines. Focus sur la création du joueur virtuel et son optimisation."
+            };
+
+            //Competences
+            let competencesDeveloppement = [
+                { name: "Git", level: 85 },
+                { name: "Java", level: 80 },
+                { name: "Javascript", level: 75 },
+                { name: "HTML", level: 75 },
+                { name: "CSS", level: 75 },
+                { name: "C", level: 70 },
+                { name: "Python", level: 65 },
+                { name: "Salesforce", level: 55 }
+            ];
+            /*let competences = {
+                competencesTableauListe : [
+                    { name: "Git", level: 85 },
+                    { name: "Java", level: 80 },
+                    { name: "Javascript", level: 75 },
+                    { name: "HTML", level: 75 },
+                    { name: "CSS", level: 75 },
+                    { name: "C", level: 70 },
+                    { name: "Python", level: 65 },
+                    { name: "Salesforce", level: 55 }
+                ],
+                competencesEnumListe : "Méthodologie Agile (Kanban, Scrum...), DevOps, C++, Bash, Docker, SQL, Ocaml, Ionic"
+            }*/
+
+            let allModes = {
+                "developpeur" : {
+                    titre: "Développeur - Ingénieur Logiciel",
+                    formationsList: [f_master, f_licence, f_bac],
+                    experiencesList: [e_serviceCivique, e_stagesCognizant],
+                    projetsList: [p_rebirth, p_blokus],
+                    competences: {
+                        competencesTableauListe: competencesDeveloppement,
+                        competencesEnumListe: "Méthodologie Agile (Kanban, Scrum...), DevOps, C++, Bash, Docker, SQL, Ocaml, Ionic"
+                    }
+                },
+
+                "mediation" : {
+                    titre: "Médiation numérique",
+                    formationsList: [f_master, f_licence, f_bac],
+                    experiencesList: [e_serviceCivique],
+                    projetsList: null,
+                    competences: {
+                        competencesTableauListe: null,
+                        competencesEnumListe: "Patience, pédagogie, aisance relationnelle, connaissances en informatique et en bureautique"
+                    }
+                },
+
+                "accueil" : {
+                    titre: "Hôte d'accueil",
+                    formationsList: [f_master, f_licence, f_bac],
+                    experiencesList: [e_serviceCivique],
+                    projetsList: null,
+                    competences: {
+                        competencesTableauListe: null,
+                        competencesEnumListe: "Patience, pédagogie, aisance relationnelle, connaissances en informatique et en bureautique"
+                    }
+                },
             }
 
             let urlParams = new URLSearchParams(window.location.search);
+
+            let mode = urlParams.get("mode");
+            if (mode==null || allModes[mode]==null) { mode = "developpeur"; }
+
+            document.getElementById("titreCV").innerHTML = allModes[mode].titre;
+            document.getElementById("linkToWeb").href = `https://github.com/ancilloy/CV?mode=${mode}`;
+            loadFormations(allModes[mode].formationsList);
+            loadExperiences(allModes[mode].experiencesList);
+            loadProjets(allModes[mode].projetsList);
+
+            let competencesStatut = "straight";
+            function switchcompetencesTableau() {
+                if (competencesStatut!="circle") { competencesStatut = "circle"; }
+                else { competencesStatut = "straight"; }
+
+                loadCompetences(allModes[mode].competences, competencesStatut);
+            }
+
+            loadCompetences(allModes[mode].competences, competencesStatut);
+
             let pdf = urlParams.get("pdf");
             if (pdf!=null) { prepareForPdf(); }
 
-            let mediation = urlParams.get("mediation");
-            if (mediation!=null) { switchToMediation(); }
         </script>
     </body>
 </html>
