@@ -6,6 +6,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
 
@@ -305,41 +306,19 @@
     </head>
     <body>
         <div id="felicitationsBox" class="copyBlock" style="top: 20px; font-size: 15px; z-index: -1;">Bravo, quelle vitesse !</div>
-        <div class="col1">
+        <div id="mainColumn" class="col1">
             <h1>ANCILLON Yaël</h1>
             <h2 id="titreCV"></h2>
             <a id="linkToWeb" href="https://ancilloy.github.io/CV/main.html">Version Web</a>
 
 
-            <h3 id="formationsTitre">Formations</h3>
-            <div id="formationsBloc"></div>
 
-
-            <h3 id="experiencesTitre">Expériences</h3>
-            <div id="experiencesBloc"></div>
-
-
-            <h3 id="projetsTitre">Projets</h3>
-            <div id="projetsBloc"></div>
-
-            <h3 id="competencesTitre">Compétences
-                <button id="switchButton" class="switchButton" onclick="switchcompetencesTableau();">
-                    <span class="material-symbols-outlined" style="font-size: inherit;">horizontal_rule</span>
-                    <span class="material-symbols-outlined" style="font-size: inherit;">swap_horiz</span>
-                    <span class="material-symbols-outlined" style="font-size: inherit;">more_horiz</span>
-                </button>
-            </h3>
-            <table id="competencesTableau" class="competences">
-            </table>
-            <div class="element">
-                <p id="competencesEnum"></p>
-            </div>
         </div>
         <div class="col2">
             <table id="coordTable" class="coordonnees">
             </table>
 
-            <p>RQTH</p>
+            <p id="rqth">RQTH</p>
 
             <p>Langues :</p>
             <ul>
@@ -356,12 +335,19 @@
             ////////////////////////////
 
             function loadFormations(formationsList) {
-                let formationsBloc = document.getElementById("formationsBloc");
+                let mainColumn = document.getElementById("mainColumn");
 
-                if (formationsList==null || formationsList.length==0) {
-                    document.getElementById("formationsTitre").remove();
-                    formationsBloc.remove();
-                } else {
+
+                if (formationsList!=null && formationsList.length!=0) {
+
+                    let formationsTitre = document.createElement("h3");
+                    formationsTitre.id = "formationsTitre";
+                    formationsTitre.innerHTML = "Formations";
+                    mainColumn.appendChild(formationsTitre);
+
+                    let formationsBloc = document.createElement("div");
+                    formationsBloc.id = "formationsBloc";
+
                     for (let i=0; i<formationsList.length; i++) {
                         let frm = document.createElement("div");
                         frm.className = "element";
@@ -376,6 +362,7 @@
 
                         formationsBloc.appendChild(frm);
                     }
+                    mainColumn.appendChild(formationsBloc);
                 }
 
             }
@@ -387,12 +374,17 @@
             /////////////////////////////
 
             function loadExperiences(experiencesList) {
-                let experiencesBloc = document.getElementById("experiencesBloc");
+                let mainColumn = document.getElementById("mainColumn");
 
-                if (experiencesList==null || experiencesList.length==0) {
-                    document.getElementById("experiencesTitre").remove();
-                    experiencesBloc.remove();
-                } else {
+                if (experiencesList!=null && experiencesList.length!=0) {
+
+                    let experiencesTitre = document.createElement("h3");
+                    experiencesTitre.id = "experiencesTitre";
+                    experiencesTitre.innerHTML = "Expériences";
+                    mainColumn.appendChild(experiencesTitre);
+
+                    let experiencesBloc = document.createElement("div");
+                    experiencesBloc.id = "experiencesBloc";
 
                     for (let i=0; i<experiencesList.length; i++) {
                         let exp = document.createElement("div");
@@ -429,6 +421,7 @@
                         experiencesBloc.appendChild(exp);
                     }
 
+                    mainColumn.appendChild(experiencesBloc);
                 }
 
             }
@@ -440,18 +433,26 @@
             /////////////////////////
 
             function loadProjets(projetsList) {
-                let projetsBloc = document.getElementById("projetsBloc");
+                let mainColumn = document.getElementById("mainColumn");
 
-                if (projetsList==null || projetsList.length==0) {
-                    document.getElementById("projetsTitre").remove();
-                    projetsBloc.remove();
-                } else {
+                if (projetsList!=null && projetsList.length!=0) {
+
+                    let projetsTitre = document.createElement("h3");
+                    projetsTitre.id = "projetsTitre";
+                    projetsTitre.innerHTML = "Projets";
+                    mainColumn.appendChild(projetsTitre);
+
+                    let projetsBloc = document.createElement("div");
+                    projetsBloc.id = "projetsBloc";
+
                     for (let i=0; i<projetsList.length; i++) {
                         let prj = document.createElement("div");
                         prj.className = "element";
                         prj.innerHTML = `<p><span class="titre">${projetsList[i].titre} (${projetsList[i].dates}) :</span> ${projetsList[i].desc}</p>`;
                         projetsBloc.appendChild(prj);
                     }
+
+                    mainColumn.appendChild(projetsBloc);
                 }
 
             }
@@ -501,7 +502,7 @@
                 return fullCircleBar;
             }
 
-            function loadCompetences(competences, mode) {
+            function loadCompetences(competences, mode, reloading) {
                 let competencesTableauListe, competencesEnumListe;
                 if (competences==null) {
                     competencesTableauListe = null;
@@ -511,12 +512,32 @@
                     competencesEnumListe    = competences.competencesEnumListe;
                 }
 
-                let competencesTableau = document.getElementById("competencesTableau");
+                let mainColumn = document.getElementById("mainColumn");
+
+                if (!reloading && (competencesTableauListe!=null || competencesEnumListe!=null)) {
+                    let competencesTitre = document.createElement("h3");
+                    competencesTitre.id = "competencesTitre";
+                    competencesTitre.innerHTML = 'Compétences' +
+                        '<button id="switchButton" class="switchButton" onclick="switchcompetencesTableau();">' +
+                        '<span class="material-symbols-outlined" style="font-size: inherit;">horizontal_rule</span>' +
+                        '<span class="material-symbols-outlined" style="font-size: inherit;">swap_horiz</span>' +
+                        '<span class="material-symbols-outlined" style="font-size: inherit;">more_horiz</span>' +
+                        '</button>';
+                    mainColumn.appendChild(competencesTitre);
+                }
+
                 if (competencesTableauListe==null) {
-                    competencesTableau.remove();
                     document.getElementById("switchButton").remove();
                 } else {
-                    competencesTableau.innerHTML = "";
+                    let competencesTableau;
+                    if (reloading) {
+                        competencesTableau = document.getElementById("competencesTableau");
+                        competencesTableau.innerHTML = "";
+                    } else {
+                        competencesTableau = document.createElement("table");
+                        competencesTableau.id = "competencesTableau";
+                        competencesTableau.className = "competences";
+                    }
 
                     for (let i=0; i<competencesTableauListe.length; i++) {
                         let newRow = document.createElement("tr");
@@ -531,17 +552,31 @@
 
                         competencesTableau.appendChild(newRow);
                     }
+                    if (!reloading) {
+                        mainColumn.appendChild(competencesTableau);
+                    }
                 }
 
-                let competencesEnum = document.getElementById("competencesEnum");
-                if (competencesEnumListe==null) {
-                    competencesEnum.remove();
-                } else {
+                if (competencesEnumListe!=null) {
+                    let competencesEnum, upperDiv;
+                    if (reloading) {
+                        competencesEnum = document.getElementById("competencesEnum");
+                    } else {
+                        upperDiv = document.createElement("div");
+                        upperDiv.className = "element";
+                        competencesEnum = document.createElement("p");
+                        competencesEnum.id = competencesEnum;
+                    }
+
                     let prefix = (competencesTableauListe!=null) ? '<span class="titre">Autres :</span> ' : "";
                     competencesEnum.innerHTML = prefix + competencesEnumListe;
+
+                    if (!reloading) {
+                        upperDiv.appendChild(competencesEnum);
+                        mainColumn.appendChild(upperDiv);
+                    }
                 }
 
-                /* <span class="titre">Autres :</span>  */
             }
 
 
@@ -649,12 +684,27 @@
             };
 
             //Experiences
-            let e_serviceCivique = {
+            let e_serviceCivique_info = {
                 titre: "Service Civique",
                 dates: "09/2025 - 04/2026",
                 entreprise: "France Travail",
                 lieu: "Grenoble, 38",
-                description: "Accompagner les usagers dans l’utilisation des outils numériques de Pôle emploi afin d'être facilitateur d’inclusion numérique et participer à des activités favorisant le lien social."
+                descList: [
+                    "Accompagnement des usagers sur leurs démarches informatiques",
+                    "Résolution des problèmes techniques",
+                    "Expérience avec des utilisateurs non-familiers avec l'informatique"
+                ]
+            };
+            let e_serviceCivique_acc = {
+                titre: "Service Civique",
+                dates: "09/2025 - 04/2026",
+                entreprise: "France Travail",
+                lieu: "Grenoble, 38",
+                descList: [
+                    "Accueil et orientation des usagers vers les services adaptés",
+                    "Gestion du flux",
+                    "Accompagnement des usagers sur leurs démarches informatiques"
+                ]
             };
             let e_stagesCognizant = {
                 titre: "Stages Salesforce",
@@ -691,25 +741,13 @@
                 { name: "Python", level: 65 },
                 { name: "Salesforce", level: 55 }
             ];
-            /*let competences = {
-                competencesTableauListe : [
-                    { name: "Git", level: 85 },
-                    { name: "Java", level: 80 },
-                    { name: "Javascript", level: 75 },
-                    { name: "HTML", level: 75 },
-                    { name: "CSS", level: 75 },
-                    { name: "C", level: 70 },
-                    { name: "Python", level: 65 },
-                    { name: "Salesforce", level: 55 }
-                ],
-                competencesEnumListe : "Méthodologie Agile (Kanban, Scrum...), DevOps, C++, Bash, Docker, SQL, Ocaml, Ionic"
-            }*/
 
             let allModes = {
                 "developpeur" : {
                     titre: "Développeur - Ingénieur Logiciel",
+                    ordre: ["formations", "experiences", "projets", "competences"],
                     formationsList: [f_master, f_licence, f_bac],
-                    experiencesList: [e_serviceCivique, e_stagesCognizant],
+                    experiencesList: [e_serviceCivique_info, e_stagesCognizant],
                     projetsList: [p_rebirth, p_blokus],
                     competences: {
                         competencesTableauListe: competencesDeveloppement,
@@ -719,23 +757,33 @@
 
                 "mediation" : {
                     titre: "Médiation numérique",
+                    fontFamily: "'Cantarell', sans-serif",
+                    fontSize: 14,
+                    ordre: ["experiences", "competences", "formations"],
                     formationsList: [f_master, f_licence, f_bac],
-                    experiencesList: [e_serviceCivique],
+                    experiencesList: [e_serviceCivique_acc],
                     projetsList: null,
                     competences: {
                         competencesTableauListe: null,
-                        competencesEnumListe: "Patience, pédagogie, aisance relationnelle, connaissances en informatique et en bureautique"
+                        competencesEnumListe: '<p><span class="titre">Sens de l\'écoute et du service :</span> Savoir écouter les demandes du client pour pouvoir y répondre au mieux.</p>' +
+                            '<p><span class="titre">Patience et pédagogie :</span> Savoir expliquer avec bienveillance, afin que l\'interlocuteur comprenne et puisse progresser.</p>' +
+                            '<p><span class="titre">Informatique et bureautique :</span> Maîtrise des outils bureautiques comme le Pack Office, connaissances avancées en informatique.</p>'
                     }
                 },
 
                 "accueil" : {
                     titre: "Hôte d'accueil",
+                    fontFamily: "'Cantarell', sans-serif",
+                    fontSize: 14,
+                    ordre: ["experiences", "competences", "formations"],
                     formationsList: [f_master, f_licence, f_bac],
-                    experiencesList: [e_serviceCivique],
+                    experiencesList: [e_serviceCivique_acc],
                     projetsList: null,
                     competences: {
                         competencesTableauListe: null,
-                        competencesEnumListe: "Patience, pédagogie, aisance relationnelle, connaissances en informatique et en bureautique"
+                        competencesEnumListe: '<p><span class="titre">Sens de l\'écoute et du service :</span> Savoir écouter les demandes du client pour pouvoir y répondre au mieux.</p>' +
+                            '<p><span class="titre">Rigueur :</span> Savoir accomplir ses tâches minutieusement pour éviter les erreurs.</p>' +
+                            '<p><span class="titre">Informatique et bureautique :</span> Maîtrise des outils bureautiques comme le Pack Office, connaissances avancées en informatique.</p>'
                     }
                 },
             }
@@ -747,19 +795,46 @@
 
             document.getElementById("titreCV").innerHTML = allModes[mode].titre;
             document.getElementById("linkToWeb").href = `https://ancilloy.github.io/CV/main.html?mode=${mode}`;
-            loadFormations(allModes[mode].formationsList);
-            loadExperiences(allModes[mode].experiencesList);
-            loadProjets(allModes[mode].projetsList);
 
-            let competencesStatut = "straight";
+            for (let i=0; i<allModes[mode].ordre.length; i++) {
+                switch(allModes[mode].ordre[i]) {
+                    case "formations":
+                        loadFormations(allModes[mode].formationsList);
+                        break;
+                    case "experiences":
+                        loadExperiences(allModes[mode].experiencesList);
+                        break;
+                    case "projets":
+                        loadProjets(allModes[mode].projetsList);
+                        break;
+                    case "competences":
+                        let competencesStatut = "straight";
+                        loadCompetences(allModes[mode].competences, competencesStatut, reloading=false);
+                        break;
+                }
+            }
+
             function switchcompetencesTableau() {
                 if (competencesStatut!="circle") { competencesStatut = "circle"; }
                 else { competencesStatut = "straight"; }
 
-                loadCompetences(allModes[mode].competences, competencesStatut);
+                loadCompetences(allModes[mode].competences, competencesStatut, reloading=true);
             }
 
-            loadCompetences(allModes[mode].competences, competencesStatut);
+            let rqth = urlParams.get("rqth");
+            if (rqth=="no") { document.getElementById("rqth").remove(); }
+
+            let customTitle = urlParams.get("title");
+            if (customTitle!=null) { document.getElementById("titreCV") = customTitle; }
+
+            if (allModes[mode].fontFamily!=null) {
+                let elementList = document.getElementsByClassName("element");
+                let fontStyle = (allModes[mode].fontSize==null) ? "" : `font-size: ${allModes[mode].fontSize};`;
+
+                for (let i=0; i<elementList.length; i++) {
+                    elementList[i].style = `font-family: ${allModes[mode].fontFamily};` + fontStyle;
+                }
+            }
 
             let pdf = urlParams.get("pdf");
             if (pdf!=null) { prepareForPdf(); }
