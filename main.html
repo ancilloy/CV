@@ -648,6 +648,8 @@
                 body.style.margin = 0;
                 body.style.border = 0;
                 document.getElementById("linkToWeb").style.zIndex = 1;
+                urlParams.delete("pdf");
+                document.getElementById("linkToWeb").href = `https://ancilloy.github.io/CV/main.html?${urlParams.toString()}`;
                 document.getElementById("linkToGit").remove();
 
                 document.getElementById("switchButton").remove();
@@ -768,7 +770,8 @@
                         competencesEnumListe: '<p><span class="titre">Sens de l\'écoute et du service :</span> Savoir écouter les demandes du client pour pouvoir y répondre au mieux.</p>' +
                             '<p><span class="titre">Patience et pédagogie :</span> Savoir expliquer avec bienveillance, afin que l\'interlocuteur comprenne et puisse progresser.</p>' +
                             '<p><span class="titre">Informatique et bureautique :</span> Maîtrise des outils bureautiques comme le Pack Office, connaissances avancées en informatique.</p>'
-                    }
+                    },
+                    rqth: false
                 },
 
                 "accueil" : {
@@ -784,8 +787,9 @@
                         competencesEnumListe: '<p><span class="titre">Sens de l\'écoute et du service :</span> Savoir écouter les demandes du client pour pouvoir y répondre au mieux.</p>' +
                             '<p><span class="titre">Rigueur :</span> Savoir accomplir ses tâches minutieusement pour éviter les erreurs.</p>' +
                             '<p><span class="titre">Informatique et bureautique :</span> Maîtrise des outils bureautiques comme le Pack Office, connaissances avancées en informatique.</p>'
-                    }
-                },
+                    },
+                rqth: false
+                }
             }
 
             let urlParams = new URLSearchParams(window.location.search);
@@ -793,8 +797,9 @@
             let mode = urlParams.get("mode");
             if (mode==null || allModes[mode]==null) { mode = "developpeur"; }
 
-            document.getElementById("titreCV").innerHTML = allModes[mode].titre;
-            document.getElementById("linkToWeb").href = `https://ancilloy.github.io/CV/main.html?mode=${mode}`;
+            let customTitle = urlParams.get("title");
+            document.getElementById("titreCV").innerHTML = (customTitle!=null) ? customTitle : allModes[mode].titre;
+
 
             for (let i=0; i<allModes[mode].ordre.length; i++) {
                 switch(allModes[mode].ordre[i]) {
@@ -822,17 +827,14 @@
             }
 
             let rqth = urlParams.get("rqth");
-            if (rqth=="no") { document.getElementById("rqth").remove(); }
-
-            let customTitle = urlParams.get("title");
-            if (customTitle!=null) { document.getElementById("titreCV") = customTitle; }
+            if (rqth=="no" || (rqth!="yes" && allModes[mode].rqth==false)) { document.getElementById("rqth").remove(); }
 
             if (allModes[mode].fontFamily!=null) {
                 let elementList = document.getElementsByClassName("element");
-                let fontStyle = (allModes[mode].fontSize==null) ? "" : `font-size: ${allModes[mode].fontSize};`;
+                let fontStyle = (allModes[mode].fontSize==null) ? "" : ` font-size: ${allModes[mode].fontSize};`;
 
                 for (let i=0; i<elementList.length; i++) {
-                    elementList[i].style = `font-family: ${allModes[mode].fontFamily};` + fontStyle;
+                    elementList[i].style = "font-family: " + allModes[mode].fontFamily + ";"; // + fontStyle;
                 }
             }
 
