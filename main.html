@@ -768,15 +768,20 @@
             };
 
             //Projets
-            let p_rebirth = {
-                titre: "Projet personnel",
-                dates: "09/2024 - 04/2025",
-                desc: "création d’un site web avec un ami, afin de se familiariser avec le développement web et ses langages (HTML, JavaScript, CSS)."
-            };
             let p_blokus = {
                 titre: "Fin de Licence",
                 dates: "05/2022",
                 desc: "programmation d’un jeu de société (Blokus), en Java, en groupe de 6, pendant 5 semaines. Focus sur la création du joueur virtuel et son optimisation."
+            };
+            let p_rebirth = {
+                titre: "Projet personnel",
+                dates: "09/2024 - 04/2025",
+                desc: "création d’un petit site web avec un ami, afin de se familiariser avec le développement web et ses langages (HTML, JavaScript, CSS)."
+            };
+            let p_fangan = {
+                titre: "Création de fangames",
+                dates: "depuis 03/2026",
+                desc: "Créations de plusieurs fangames (dont un sous forme de page web interactive) pour lesquels je m'occupe seul de la partie développement."
             };
 
             //Competences
@@ -799,7 +804,7 @@
                     formationsList: [f_master, f_licence, f_bac],
                     experiencesList: [e_serviceCivique_info, e_stagesCognizant],
                     loisirsList: null,
-                    projetsList: [p_rebirth, p_blokus],
+                    projetsList: [p_fangan, p_rebirth, p_blokus],
                     competences: {
                         competencesTableauListe: competencesDeveloppement,
                         competencesEnumListe: "Méthodologie Agile (Kanban, Scrum...), DevOps, C++, Bash, Docker, SQL, Ocaml, Ionic"
@@ -822,7 +827,7 @@
                             '<p><span class="titre">Patience et pédagogie :</span> Savoir expliquer avec bienveillance, afin que l\'interlocuteur comprenne et puisse progresser.</p>' +
                             '<p><span class="titre">Informatique et bureautique :</span> Forte aisance avec les environnements informatiques, maîtrise des outils bureautiques comme le Pack Office, connaissances avancées en informatique.</p>'
                     },
-                rqth: false
+                    rqth: false
                 },
 
                 "mediation": null // See below
@@ -848,6 +853,8 @@
                 accrocheBloc.innerHTML = accroche;
             }
 
+            let competencesStatut = "straight";
+
 
             for (let i=0; i<mode.ordre.length; i++) {
                 switch(mode.ordre[i]) {
@@ -864,7 +871,6 @@
                         loadLoisirs(mode.loisirsList);
                         break;
                     case "competences":
-                        let competencesStatut = "straight";
                         loadCompetences(mode.competences, competencesStatut, reloading=false);
                         break;
                 }
