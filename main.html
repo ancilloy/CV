@@ -14,7 +14,7 @@
             :root {
                 --main-color: #2c5a77;
                 --main-gray: #555;
-                --lighter-gray: #bbb;
+                --lighter-gray: #ccc;
             }
 
             html {
@@ -37,7 +37,7 @@
                 position: relative;
             }
 
-            div.col1 {
+            #col1 {
                 position: absolute;
                 left: 0;
 
@@ -59,7 +59,7 @@
                 font-size: 12px;
             }
 
-            div.col2 {
+            #col2 {
                 position: absolute;
                 right: 0;
 
@@ -94,6 +94,11 @@
                 margin: 20px 0 2px 10px;
 
                 position: relative;
+            }
+
+            #col2 h3 {
+                border-bottom: none;
+                color: var(--lighter-gray);
             }
 
             .switchButton {
@@ -216,17 +221,17 @@
                 text-align: center;
             }
 
-            div.col2 > p {
+            #col2 > p {
                 margin: 30px 0 0 10px;
             }
 
-            div.col2 > ul {
+            #col2 > ul {
                 list-style-type: none;
                 color: var(--lighter-gray);
                 padding-left: 40px;
             }
 
-            div.col2 > ul > li {
+            #col2 ul > li {
                 margin-top: 5px;
             }
 
@@ -306,7 +311,7 @@
     </head>
     <body>
         <div id="felicitationsBox" class="copyBlock" style="top: 20px; font-size: 15px; z-index: -1;">Bravo, quelle vitesse !</div>
-        <div id="mainColumn" class="col1">
+        <div id="col1">
             <h1>ANCILLON Yaël</h1>
             <h2 id="titreCV"></h2>
             <div class="element" id="accrocheBloc"></div>
@@ -315,17 +320,19 @@
 
 
         </div>
-        <div class="col2">
+        <div id="col2">
             <table id="coordTable" class="coordonnees">
             </table>
 
             <p id="rqth">RQTH</p>
 
-            <p>Langues :</p>
-            <ul>
-                <li>Français (langue maternelle)</li>
-                <li>Anglais (C1)</li>
-            </ul>
+            <h3>Langues</h3>
+            <div class="element">
+                <ul>
+                    <li>Français (langue maternelle)</li>
+                    <li>Anglais (C1)</li>
+                </ul>
+            </div>
 
             <a id="linkToGit" href="https://github.com/ancilloy/CV">Dépot Git</a>
         </div>
@@ -335,8 +342,8 @@
             //////// Formations ////////
             ////////////////////////////
 
-            function loadFormations(formationsList) {
-                let mainColumn = document.getElementById("mainColumn");
+            function loadFormations(formationsList, column="col1") {
+                let mainColumn = document.getElementById(column);
 
 
                 if (formationsList!=null && formationsList.length!=0) {
@@ -374,8 +381,8 @@
             //////// Experiences ////////
             /////////////////////////////
 
-            function loadExperiences(experiencesList) {
-                let mainColumn = document.getElementById("mainColumn");
+            function loadExperiences(experiencesList, column="col1") {
+                let mainColumn = document.getElementById(column);
 
                 if (experiencesList!=null && experiencesList.length!=0) {
 
@@ -433,8 +440,8 @@
             //////// Projets ////////
             /////////////////////////
 
-            function loadProjets(projetsList) {
-                let mainColumn = document.getElementById("mainColumn");
+            function loadProjets(projetsList, column="col1") {
+                let mainColumn = document.getElementById(column);
 
                 if (projetsList!=null && projetsList.length!=0) {
 
@@ -503,7 +510,7 @@
                 return fullCircleBar;
             }
 
-            function loadCompetences(competences, mode, reloading) {
+            function loadCompetences(competences, mode, reloading, column="col1") {
                 let competencesTableauListe, competencesEnumListe;
                 if (competences==null) {
                     competencesTableauListe = null;
@@ -513,7 +520,7 @@
                     competencesEnumListe    = competences.competencesEnumListe;
                 }
 
-                let mainColumn = document.getElementById("mainColumn");
+                let mainColumn = document.getElementById(column);
 
                 if (!reloading && (competencesTableauListe!=null || competencesEnumListe!=null)) {
                     let competencesTitre = document.createElement("h3");
@@ -586,8 +593,8 @@
             //////// Loisirs ////////
             /////////////////////////
 
-            function loadLoisirs(loisirsList) {
-                let mainColumn = document.getElementById("mainColumn");
+            function loadLoisirs(loisirsList, column="col1") {
+                let mainColumn = document.getElementById(column);
 
                 if (loisirsList!=null && loisirsList.length!=0) {
 
@@ -718,6 +725,17 @@
             };
 
             //Experiences
+            let e_intersports = {
+                titre: "Hôte d'accueil",
+                dates: "09/2026",
+                entreprise: "Intersports",
+                lieu: "Sassenage, 38",
+                descList: [
+                    "Réception du courrier et des colis",
+                    "Standard téléphonique",
+                    "Ouverture et fermeture des portes"
+                ]
+            };
             let e_serviceCivique_info = {
                 titre: "Service Civique",
                 dates: "09/2025 - 04/2026",
@@ -800,7 +818,7 @@
                 "developpeur" : {
                     titre: "Développeur - Ingénieur Logiciel",
                     accroche: null,
-                    ordre: ["formations", "experiences", "projets", "competences"],
+                    ordreC1: ["formations", "experiences", "projets", "competences"],
                     formationsList: [f_master, f_licence, f_bac],
                     experiencesList: [e_serviceCivique_info, e_stagesCognizant],
                     loisirsList: null,
@@ -816,9 +834,10 @@
                     accroche: null,
                     fontFamily: "'Cantarell', sans-serif",
                     fontSize: 14,
-                    ordre: ["experiences", "competences", "loisirs", "formations"],
+                    ordreC1: ["experiences", "competences", "formations"],
+                    ordreC2: ["loisirs"],
                     formationsList: [f_master, f_licence, f_bac],
-                    experiencesList: [e_serviceCivique_acc],
+                    experiencesList: [e_intersports, e_serviceCivique_acc],
                     loisirsList: [l_modo, l_trad, l_strat],
                     projetsList: null,
                     competences: {
@@ -834,6 +853,7 @@
             }
             allModes["mediation"] = structuredClone(allModes["accueil"]);
             allModes["mediation"].titre = "Médiation numérique";
+            allModes["mediation"].experiencesList = [e_serviceCivique_acc];
 
 
             let urlParams = new URLSearchParams(window.location.search);
@@ -856,25 +876,31 @@
             let competencesStatut = "straight";
 
 
-            for (let i=0; i<mode.ordre.length; i++) {
-                switch(mode.ordre[i]) {
-                    case "formations":
-                        loadFormations(mode.formationsList);
-                        break;
-                    case "experiences":
-                        loadExperiences(mode.experiencesList);
-                        break;
-                    case "projets":
-                        loadProjets(mode.projetsList);
-                        break;
-                    case "loisirs":
-                        loadLoisirs(mode.loisirsList);
-                        break;
-                    case "competences":
-                        loadCompetences(mode.competences, competencesStatut, reloading=false);
-                        break;
+            function fillColumn(order, mode, colName) {
+                if (order!=null) {
+                    for (let i=0; i<order.length; i++) {
+                        switch(order[i]) {
+                            case "formations":
+                                loadFormations(mode.formationsList, column=colName);
+                                break;
+                            case "experiences":
+                                loadExperiences(mode.experiencesList, column=colName);
+                                break;
+                            case "projets":
+                                loadProjets(mode.projetsList, column=colName);
+                                break;
+                            case "loisirs":
+                                loadLoisirs(mode.loisirsList, column=colName);
+                                break;
+                            case "competences":
+                                loadCompetences(mode.competences, competencesStatut, reloading=false, column=colName);
+                                break;
+                        }
+                    }
                 }
             }
+            fillColumn(mode.ordreC1, mode, "col1");
+            fillColumn(mode.ordreC2, mode, "col2");
 
             function switchcompetencesTableau() {
                 if (competencesStatut!="circle") { competencesStatut = "circle"; }
